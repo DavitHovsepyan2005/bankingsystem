@@ -1,4 +1,4 @@
-package banking;
+package banking.enums;
 
 public enum CardType {
 
