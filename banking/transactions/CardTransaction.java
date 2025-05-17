@@ -5,75 +5,84 @@ import banking.users.CardHolder;
 import banking.exceptions.InsufficientFundsException;
 import banking.enums.CardStatus;
 
+import java.util.ArrayList;
+
 public class CardTransaction {
 
     void deposit(int money, CardAccount cardAccount){
         if(cardAccount.equals(null)){
             throw new NullPointerException();
         }
-        if(cardAccount.cardStatus==CardStatus.BLOCKED){
+        if(cardAccount.getCardStatus()==CardStatus.BLOCKED){
             throw new UnsupportedOperationException();
         }
         if(money<0){
             throw new IllegalArgumentException();
         }
-        if(cardAccount.cardStatus==CardStatus.CLOSED){
+        if(cardAccount.getCardStatus()==CardStatus.CLOSED){
             throw new UnsupportedOperationException();
         }
-        cardAccount.ballance+=money;
+        cardAccount.setBallance(cardAccount.getBallance()+money);
     }
     void withdraw(int money, CardAccount cardAccount){
         if(cardAccount.equals(null)){
             throw new NullPointerException();
         }
-        if(cardAccount.cardStatus==CardStatus.BLOCKED){
+        if(cardAccount.getCardStatus()==CardStatus.BLOCKED){
             throw new UnsupportedOperationException();
         }
         if(money<0){
             throw new IllegalArgumentException();
         }
-        if(cardAccount.cardStatus==CardStatus.CLOSED){
+        if(cardAccount.getCardStatus()==CardStatus.CLOSED){
             throw new UnsupportedOperationException();
         }
 
-        if(money > cardAccount.ballance){
+        if(money > cardAccount.getBallance()){
             throw new InsufficientFundsException();
         }
-        cardAccount.ballance-=money;
+        cardAccount.setBallance(cardAccount.getBallance()-money);
     }
 
      void transfer(int money, CardAccount cardAccount1 , CardAccount cardAccount2){
-       cardAccount1.ballance -= money;
+         cardAccount1.setBallance(cardAccount1.getBallance()-money);
+         cardAccount2.setBallance(cardAccount2.getBallance()+money);
          if(cardAccount1.equals(null) | cardAccount2.equals(null)){
              throw new NullPointerException();
          }
-         if(cardAccount1.cardStatus==CardStatus.BLOCKED | cardAccount2.cardStatus==CardStatus.BLOCKED){
+         if(cardAccount1.getCardStatus()==CardStatus.BLOCKED | cardAccount2.getCardStatus()==CardStatus.BLOCKED){
              throw new UnsupportedOperationException();
          }
          if(money<0){
              throw new IllegalArgumentException();
          }
-         if(cardAccount1.cardStatus==CardStatus.CLOSED | cardAccount2.cardStatus==CardStatus.CLOSED){
+         if(cardAccount1.getCardStatus()==CardStatus.CLOSED | cardAccount2.getCardStatus()==CardStatus.CLOSED){
              throw new UnsupportedOperationException();
          }
-         if(money > cardAccount1.ballance){
+         if(money > cardAccount1.getBallance()){
             throw new InsufficientFundsException();
         }
-       cardAccount2.ballance += money;
+
     }
-     void addCard(CardAccount cardAccount, CardHolder cardHolder){
+     void addCard(ArrayList<CardAccount> cardAccount, CardHolder cardHolder){
          if(cardAccount.equals(null)){
              throw new NullPointerException();
          }
          if(cardHolder.equals(null)){
              throw new NullPointerException();
          }
-        cardHolder.cardAccount=cardAccount;
+         if(cardAccount.isEmpty()){
+             throw new NullPointerException();
+         }
+         if(cardAccount.size()>3){
+             throw new IllegalArgumentException();
+         }
+        cardHolder.setCardAccount(cardHolder.getCardAccount());
     }
      void blockCard(CardAccount cardAccount){
          if(cardAccount==null){
              throw new NullPointerException();
          }
-          cardAccount.cardStatus = CardStatus.BLOCKED;
+          cardAccount.setCardStatus(CardStatus.BLOCKED);
     }
 }

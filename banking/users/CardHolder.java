@@ -3,15 +3,39 @@ package banking.users;
 import banking.accounts.Address;
 import banking.accounts.BankAccount;
 import banking.accounts.CardAccount;
-
+import java.util.*;
 public class CardHolder {
-    int passportNumber;
-    String fullName;
-    Address address;
-   public BankAccount bankAccount;
-   public CardAccount cardAccount;
+    private int passportNumber;
+    private String fullName;
+    private Address address;
+    private BankAccount bankAccount;
+    private ArrayList<CardAccount> cardAccount;
 
-    public CardHolder(int PassportNumber, String FullName , Address address, CardAccount cardAccount, BankAccount bankAccount){
+    public void setCardAccount(ArrayList<CardAccount> cardAccount) {
+        this.cardAccount = cardAccount;
+    }
+
+    public int getPassportNumber() {
+        return passportNumber;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public BankAccount getBankAccount() {
+        return bankAccount;
+    }
+
+    public ArrayList<CardAccount> getCardAccount() {
+        return cardAccount;
+    }
+
+    public CardHolder(int PassportNumber, String FullName , Address address, ArrayList<CardAccount> cardAccount, BankAccount bankAccount){
         this.passportNumber=PassportNumber;
         this.fullName=FullName;
         this.address=address;
